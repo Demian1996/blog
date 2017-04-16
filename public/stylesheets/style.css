@@ -6,7 +6,7 @@ a,a:hover {
   color: #657180;
   text-decoration: none;
 }
-li,a {
+li,a,h1 {
   display: inline-block;
 }
 body {
@@ -47,7 +47,7 @@ body {
 .article {
   width: 60%;
   background-color: #fff;
-  color: #657180;
+  color: #464c5b;
   border-radius: 3px;
   margin-top: 30px;
   margin-left: 10%;
@@ -55,9 +55,10 @@ body {
   position: relative;
   overflow: hidden;
 }
-.article .article-title {
-  margin: 20px;
-  color: #5cadff;
+.article .article-title a{
+  margin: 20px 20px 20px;
+  font-size: 1.2em;
+  color: #444444;
 }
 .article a:hover {
   color: #3399ff;
@@ -69,7 +70,7 @@ body {
   right: 10px;
 }
 .article .article-content {
-  margin: 20px;
+  margin: 0 20px 20px 20px;
 }
 /*archive*/
 #archive {
@@ -147,7 +148,7 @@ body {
 /*article-page*/ 
 #article-page {
   width: 60%;
-  color: #657180;
+  color: #464c5b;
   border-radius: 3px;
   background-color: #fff;
   margin-top: 30px;
@@ -162,6 +163,7 @@ body {
 }
 #article-page .title {
   font-size: 2.4em;
+  color: #444444;
 }
 #article-page .info {
   color: #9ea7b4;

@@ -277,19 +277,9 @@ module.exports = function (app){
     });
   });
   app.get('/about', function (req, res) {
-    if(req.params.title != 'ajax.js'){
-    Post.getOne(req.params.name, req.params.day, req.params.title, function (err, post, allposts) {
-      if (err) {
-//      req.flash('error', err); 
-        return res.redirect('/');
-      }
-      res.render('article', {
-        post: post,
-        allposts: allposts,
-        user: req.session.user
-      });
+    res.render('about', {
+      user: req.session.user
     });
-    }
   });
 };
   
