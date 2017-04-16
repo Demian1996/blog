@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>主页</title>
+    <link rel="stylesheet" href="http://localhost:3000/stylesheets/style.css" />
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+  </head>
+
+  <body>
+    <nav id="navigation">
+      <ul>
+        <img src="/images/mylogo.png" />
+        <li>
+          <a href="/"><i class="ion-ios-home-outline"></i>&nbsp;&nbsp;主页</a>
+        </li><% if (user) { %><li>
+          <a href="/post"><i class="ion-ios-compose-outline"></i>&nbsp;&nbsp;发表</a>
+        </li><li>
+          <a href="/upload"><i class="ion-ios-cloud-upload-outline"></i>&nbsp;&nbsp;上传</a>
+        </li><li>
+          <a href="/logout"><i class="ion-log-out"></i>&nbsp;&nbsp;登出</a>
+        </li><% } else { %><li>
+          <a href="/about"><i class="ion-ios-information-outline"></i>&nbsp;&nbsp;关于</a>
+        </li><li>
+          <a href="/login"><i class="ion-log-in"></i>&nbsp;&nbsp;登录</a>
+        </li>
+        <% } %>
+        <!--<input class="input" type="text" />-->
+      </ul>
+    </nav>
+    <!--<div class="spinner">
+      <div class="spinner-container container1">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+      </div>
+      <div class="spinner-container container2">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+      </div>
+      <div class="spinner-container container3">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+      </div>
+    </div>-->
+
+

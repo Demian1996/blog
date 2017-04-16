@@ -1,0 +1,15 @@
+<div id="paging">
+  <div id="wrapper">
+    <ul>
+      <% if (!isFirstPage) { %>
+      <li><a title="上一页" href="?p=<%= page-1 %>"><i class="ion-chevron-left"></i></a></li>
+      <% } %>
+      <% for(let i = 1; i <= totalpage; i++){ %>
+      <li><a <% if(i == page){ %> class="primary" <% } %> href="?p=<%= i %>"><%= i %></a></li>
+      <% } %>
+      <% if (!isLastPage) { %>
+      <li><a title="下一页" href="?p=<%= page+1 %>"><i class="ion-chevron-right"></i></a></li>
+      <% } %>
+    </ul>
+  </div>
+</div>

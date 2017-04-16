@@ -1,0 +1,18 @@
+<div id="archive">
+  <h4><span>文章归档</span></h4>
+  <div id="archives">
+  <ul>
+  <% var lastMonth = allposts[0].time.month,count = 0; %>
+  
+  <% allposts.forEach(function (post, index) { %>
+    <% if (lastMonth != post.time.month ) { %>
+      <li><i class="ion-folder"></i>&nbsp;<a href="/archive/<%= lastMonth %>"><%= lastMonth %></a>&nbsp;(<%= count %>)</li><br />
+    <% lastMonth=post.time.month;count = 0 } %>
+    <% count++; %>
+    <% if (index == allposts.length - 1) {%>
+      <li><i class="ion-folder"></i>&nbsp;<a href="/archive/<%= lastMonth %>"><%= lastMonth %></a>&nbsp;(<%= count %>)</li>
+    <% } %>
+  <% }) %>
+  </ul>
+  </div>
+</div>
