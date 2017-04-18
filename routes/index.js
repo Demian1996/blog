@@ -36,13 +36,14 @@ module.exports = function (app){
     //判断是否是第一页，并把请求的页数转换成 number 类型
     var page = req.query.p ? parseInt(req.query.p) : 1;
     //查询并返回第 page 页的 5 篇文章
-    Post.getFive(null, page, function (err, posts, allposts, total) {
+    Post.getFive(null, page, function (err, posts, allposts, tagposts, total) {
       if (err) {
         posts = [];
       } 
       res.render('index', {
         posts: posts,
         allposts: allposts,
+        tagposts: tagposts,
         page: page,
         totalpage: parseInt((total - 1) / 5) + 1,
 	      isFirstPage: (page - 1) == 0,
@@ -184,7 +185,7 @@ module.exports = function (app){
         return res.redirect('/');
       }
       //查询并返回该用户第 page 页的 5 篇文章
-      Post.getFive(user.name, page, function (err, posts, allposts, total) {
+      Post.getFive(user.name, page, function (err, posts, allposts, tagposts, total) {
         if (err) {
 //        req.flash('error', err); 
           return res.redirect('/');
@@ -193,6 +194,7 @@ module.exports = function (app){
           posts: posts,
           page: page,
           allposts: allposts,
+          tagposts: tagposts,
 	        totalpage: parseInt((total - 1) / 5) + 1,
           isFirstPage: (page - 1) == 0,
           isLastPage: ((page - 1) * 5 + posts.length) == total,
@@ -203,7 +205,7 @@ module.exports = function (app){
   });
   app.get('/u/:name/:day/:title', function (req, res) {
     if(req.params.title != 'ajax.js'){
-    Post.getOne(req.params.name, req.params.day, req.params.title, function (err, post, allposts) {
+    Post.getOne(req.params.name, req.params.day, req.params.title, function (err, post, allposts, tagposts) {
       if (err) {
 //      req.flash('error', err); 
         return res.redirect('/');
@@ -211,6 +213,7 @@ module.exports = function (app){
       res.render('article', {
         post: post,
         allposts: allposts,
+        tagposts: tagposts,
         user: req.session.user
       });
     });
@@ -233,7 +236,9 @@ module.exports = function (app){
   app.post('/edit/:name/:day/:title', checkLogin);
   app.post('/edit/:name/:day/:title', function (req, res) {
     var currentUser = req.session.user;
-    Post.update(currentUser.name, req.params.day, req.params.title, req.body.post, function (err) {
+//  console.log(req.body.tags);
+//  debugger;
+    Post.update(currentUser.name, req.params.day, req.params.title, req.body.post, req.body.tags, function (err) {
 //    var url = encodeURI('/u/' + req.params.name + '/' + req.params.day + '/' + req.params.title);
       if (err) {
 //      req.flash('error', err); 
@@ -259,13 +264,14 @@ module.exports = function (app){
     //判断是否是第一页，并把请求的页数转换成 number 类型
     var page = req.query.p ? parseInt(req.query.p) : 1;
     //查询并返回第 page 页的 5 篇文章
-    Post.getArchive(req.params.month, page, function (err, posts, allposts, total) {
+    Post.getArchive(req.params.month, page, function (err, posts, allposts, tagposts, total){
       if (err) {
         posts = [];
       } 
       res.render('index', {
         posts: posts,
         allposts: allposts,
+        tagposts: tagposts,
         page: page,
         totalpage: parseInt((total - 1) / 5) + 1,
         isFirstPage: (page - 1) == 0,
@@ -276,6 +282,24 @@ module.exports = function (app){
       });
     });
   });
+  app.get('/tags/:tag', function (req, res){
+    var page = req.query.p ? parseInt(req.query.p) : 1;
+    Post.getTag(req.params.tag, page, function (err, posts, allposts, tagposts, total){
+      if(err){
+        posts = [];
+      }
+      res.render('index', {
+        posts: posts,
+        allposts: allposts,
+        tagposts: tagposts,
+        page: page,
+        totalpage: parseInt((total - 1) / 5) + 1,
+        isFirstPage: (page - 1) == 0,
+        isLastPage: ((page - 1) * 5 + posts.length) == total,
+        user: req.session.user
+      });
+    });
+  })
   app.get('/about', function (req, res) {
     res.render('about', {
       user: req.session.user

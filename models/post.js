@@ -59,7 +59,8 @@ Post.prototype.save = function(callback) {
 Post.getFive = function(name, page, callback) {
   var displayArticles,
       archiveArticles,
-      total;
+      total,
+      tagArticles;
 
   mongodb.open(function (err, db) {
     if (err) {
@@ -101,12 +102,18 @@ Post.getFive = function(name, page, callback) {
           }).sort({
             time: -1
           }).toArray(function (err, docs) {
-            mongodb.close();
             if (err) {
               return callback(err);
             }
             archiveArticles = docs;
-            callback(null, displayArticles, archiveArticles, total);
+            collection.distinct("tags", function (err, docs){
+              mongodb.close();
+              if(err){
+                return callback(err);
+              }
+              tagArticles = docs;
+              callback(null, displayArticles, archiveArticles, tagArticles, total);
+            });
           });
         });
       });
@@ -116,7 +123,10 @@ Post.getFive = function(name, page, callback) {
 
 //读取某个文章
 Post.getOne = function(name, day, title, callback) {
-  //打开数据库
+  var displayArticle,
+      archiveArticles,
+      tagArticles;
+//打开数据库
   mongodb.open(function (err, db) {
     if (err) {
       return callback(err);
@@ -138,6 +148,8 @@ Post.getOne = function(name, day, title, callback) {
         }
         //解析 markdown 为 html
         doc.post = markdown.toHTML(doc.post);
+        displayArticle = doc;
+        
         //返回只包含 name、time、title 属性的文档组成的存档数组
         collection.find({}, {
           "name": 1,
@@ -146,11 +158,18 @@ Post.getOne = function(name, day, title, callback) {
         }).sort({
           time: -1
         }).toArray(function (err, docs) {
-          mongodb.close();
           if (err) {
             return callback(err);
           }
-          callback(null, doc, docs);
+          archiveArticles = docs;
+          collection.distinct('tags', function (err, docs){
+            mongodb.close();
+            if(err){
+              return callback(err);
+            }
+            tagArticles = docs;
+            callback(null, displayArticle, archiveArticles, tagArticles);
+          });
         });
       });
     });
@@ -187,7 +206,7 @@ Post.edit = function(name, day, title, callback) {
 };
 
 //更新一篇文章及其相关信息
-Post.update = function(name, day, title, post, callback) {
+Post.update = function(name, day, title, post, tags, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -205,7 +224,10 @@ Post.update = function(name, day, title, post, callback) {
         "time.day": day,
         "title": title
       }, {
-        $set: {post: post}
+        $set: {
+          post: post,
+          tags: tags
+        }
       }, function (err) {
         mongodb.close();
         if (err) {
@@ -251,7 +273,8 @@ Post.remove = function(name, day, title, callback) {
 Post.getArchive = function(month, page, callback) {
   var displayArticles,
       archiveArticles,
-      total;
+      total,
+      tagArticles;
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -274,11 +297,11 @@ Post.getArchive = function(month, page, callback) {
           if (err) {
             return callback(err);
           }
-          
-          //解析 markdown 为 html
+            //解析 markdown 为 html
           docs.forEach(function (doc) {
             doc.post = markdown.toHTML(doc.post);
           });
+        
           displayArticles = docs;
           total = total;
 
@@ -289,21 +312,32 @@ Post.getArchive = function(month, page, callback) {
           }).sort({
             time: -1
           }).toArray(function (err, docs) {
-            mongodb.close();
             if (err) {
               return callback(err);
             }
             archiveArticles = docs;
-            callback(null, displayArticles, archiveArticles, total);
+            collection.distinct('tags', function (err, docs){
+              mongodb.close();
+              if(err){
+                callback(err);
+              }
+              tagArticles = docs;
+              callback(null, displayArticles, archiveArticles, tagArticles, total);
+            });
           });
         });
       });
     });
   });
 };
-//返回所有标签
-Post.getTags = function(callback) {
-  mongodb.open(function (err, db) {
+//返回特定标签的所有文章
+Post.getTag = function (tag, page, callback){
+  var tagArticles,
+      archiveArticles,
+      total,
+      displayArticles;
+      
+  mongodb.open(function (err, db){
     if (err) {
       return callback(err);
     }
@@ -314,11 +348,41 @@ Post.getTags = function(callback) {
       }
       //distinct 用来找出给定键的所有不同值
       collection.distinct("tags", function (err, docs) {
-        mongodb.close();
         if (err) {
           return callback(err);
         }
-        callback(null, docs);
+        tagArticles = docs;
+        collection.find({},{
+          "name": 1,
+          "title": 1,
+          "time": 1
+        }).sort({
+          time: -1
+        }).toArray(function (err, docs){
+          if(err){
+            callback(err);
+          }
+          archiveArticles = docs;
+          collection.count({"tags": tag}, function (err, total){
+            collection.find({"tags": tag},{
+              skip: (page - 1) * 5,
+              limit: 5 
+            }).sort({
+              time : -1
+            }).toArray(function (err, docs){
+              mongodb.close();
+              if(err){
+                callback(err);
+              }
+              docs.forEach(function (doc){
+                doc.post = markdown.toHTML(doc.post);
+              })
+              displayArticles = docs;
+              total = total;
+              callback(null, displayArticles, archiveArticles, tagArticles, total);
+            });
+          });
+        });
       });
     });
   });

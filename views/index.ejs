@@ -1,10 +1,19 @@
 <%- include header %>
 <section id="content">
 <%- include archive %>
+<%- include tag %>
 <% posts.forEach(function (post, index) { %>
 <div class="article">
   <h1 class="article-title"><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h1>
-  <div class="article-info">作者:<a href="/u/<%= post.name %>"><%= post.name %></a>|日期:<%= post.time.minute %></div>
+  <div class="article-info">
+    <% if(post.tags){ %>
+    <% post.tags.forEach(function (tag){ %>
+      <% if(tag){ %>
+      <span class="tag"><%= tag %></span>
+      <% } %>
+    <% }); %>
+    <% } %>
+  作者:<a href="/u/<%= post.name %>"><%= post.name %></a>|日期:<%= post.time.minute %></div>
   <div class="article-content"><%- post.post %></div>
 </div>
 <% }); %>

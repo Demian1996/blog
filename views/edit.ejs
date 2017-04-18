@@ -3,10 +3,12 @@
 <div class="locate">
 <form method="post">
   标题：<br />
-  <input type="text" name="title" value="<%= post.title %>" disabled="disabled" /><br />
+  <input class="input" type="text" name="title" value="<%= post.title %>" disabled="disabled" /><br />
+  标签：<br />
+  <input class="input" type="text" name="tags" value="<%= post.tags[0] %>" /><input class="input" type="text" name="tags" value="<%= post.tags[1] %>" /><input class="input" type="text" name="tags" value="<%= post.tags[2] %>" /><br />
   正文：<br />
-  <textarea name="post" rows="100" cols="100"><%= post.post %></textarea><br />
-  <input type="submit" value="保存修改" />
+  <textarea class="text" name="post" rows="80" cols="100"><%= post.post %></textarea><br />
+  <input class="btn" type="submit" value="保存修改" />
 </form>
 </div>
 </section>

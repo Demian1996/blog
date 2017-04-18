@@ -22,13 +22,13 @@ body {
 }
 #navigation img {
   position: absolute;
-  left: 5em;
-  width: 5em;
+  left: 3em;
+  width: 7em;
   height: 5em;
 }
 #navigation a {
   height: 5em;
-  width: 7em;
+  width: 6em;
   text-align: center;
   line-height: 5em;
   box-sizing: border-box;
@@ -44,10 +44,13 @@ body {
   border-bottom: 2px solid #3399ff;
 }
 /*index、user*/
+#content {
+  overflow: hidden;
+}
 .article {
   width: 60%;
   background-color: #fff;
-  color: #464c5b;
+  color: #657180;
   border-radius: 3px;
   margin-top: 30px;
   margin-left: 10%;
@@ -58,7 +61,7 @@ body {
 .article .article-title a{
   margin: 20px 20px 20px;
   font-size: 1.2em;
-  color: #444444;
+  color: #464C5B;
 }
 .article a:hover {
   color: #3399ff;
@@ -69,14 +72,23 @@ body {
   top: 10px;
   right: 10px;
 }
+.article span.tag {
+  height: 1em;
+  line-height: 1em;
+  padding: 5px 8px;
+  margin: 3px;
+  background-color: #9ea7b4;
+  border-radius: 5px;
+  color: #fff;
+}
 .article .article-content {
   margin: 0 20px 20px 20px;
 }
 /*archive*/
 #archive {
   width: 20%;
-  position: absolute;
-  right: 7%;
+  float: right;
+  margin: 30px 5% 0 0;
   border-radius: 3px;
   box-sizing: border-box;
   padding: 20px;
@@ -100,7 +112,7 @@ body {
 }
 #archive i {
   font-size: 20px;
-  color: #fae068;
+  color: #FFCB50;
 }
 #archive a {
   color: #657180;
@@ -108,6 +120,47 @@ body {
 }
 #archive a:hover {
   color: #5cadff;
+}
+/*tag*/
+#tag {
+  width: 20%;
+  float: right;
+  margin: 30px 5% 0 0;
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: #fff;
+  clear: both;
+}
+#tag h4 {
+  border-bottom: 2px solid #d7dde4;
+  margin-bottom: 5px;
+}
+#tag h4 span {
+  display: inline-block;
+  padding-bottom: 5px;
+  border-bottom: 3px solid #3399ff;
+  color: #464c5b;
+  position: relative;
+  top: 2px;
+}
+#tag li {
+  height: 1.5em;
+  line-height: 1.5em;
+}
+#tag a {
+  height: 1em;
+  line-height: 1em;
+  padding: 5px 8px;
+  margin: 3px;
+  background-color: #39f;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .2s ease-in-out; 
+}
+#tag a:hover {
+  background-color: #657180;
 }
 /*paging*/
 #paging {
@@ -148,7 +201,7 @@ body {
 /*article-page*/ 
 #article-page {
   width: 60%;
-  color: #464c5b;
+  color: #657180;
   border-radius: 3px;
   background-color: #fff;
   margin-top: 30px;
@@ -163,15 +216,20 @@ body {
 }
 #article-page .title {
   font-size: 2.4em;
-  color: #444444;
+  color: #464c5b;
 }
 #article-page .info {
   color: #9ea7b4;
   margin: 10px 10px 10px 0;
 }
 #article-page .info .tag {
-  background-color: #grey;
+  height: 1em;
+  line-height: 1em;
+  padding: 5px 8px;
+  margin: 3px;
+  background-color: #9ea7b4;
   border-radius: 5px;
+  color: #fff;
 }
 .control-padding {
   margin: 20px;

@@ -1,0 +1,10 @@
+<div id="tag">
+  <h4><span>标签</span></h4>
+  <div id="tags">
+  <% tagposts.forEach(function (tag, index) { %>
+    <% if(tag){ %>
+    <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
+    <% } %>
+  <% }) %>
+  </div>
+</div>

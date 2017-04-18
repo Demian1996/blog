@@ -1,6 +1,7 @@
 <%- include header %>
 <section id="content">
 <%- include archive %>
+<%- include tag %>
 <% posts.forEach(function (post, index) { %>
   <div class="article">
     <h1 class="article-title"><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h1>

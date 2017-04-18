@@ -1,6 +1,7 @@
 <div id="archive">
   <h4><span>文章归档</span></h4>
   <div id="archives">
+  <% if(allposts.length != 0){ %>
   <ul>
   <% var lastMonth = allposts[0].time.month,count = 0; %>
   
@@ -14,5 +15,6 @@
     <% } %>
   <% }) %>
   </ul>
+  <% } %>
   </div>
 </div>
