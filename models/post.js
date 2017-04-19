@@ -364,6 +364,9 @@ Post.getTag = function (tag, page, callback){
           }
           archiveArticles = docs;
           collection.count({"tags": tag}, function (err, total){
+            if(err){
+              callback(err);
+            }
             collection.find({"tags": tag},{
               skip: (page - 1) * 5,
               limit: 5 
@@ -379,6 +382,61 @@ Post.getTag = function (tag, page, callback){
               })
               displayArticles = docs;
               total = total;
+              callback(null, displayArticles, archiveArticles, tagArticles, total);
+            });
+          });
+        });
+      });
+    });
+  });
+};
+//返回搜索文章
+Post.search = function (keyword, page, callback){
+  var displayArticles,
+      archiveArticles,
+      tagArticles,
+      total;
+  mongodb.open(function(err, db){
+    if(err){
+      callback(err);
+    }
+    db.collection('posts', function (err, collection){
+      collection.count({"title":{$regex:keyword,$options:"$gi"}}, function (err, total){
+        if(err){
+          callback(err); 
+        }
+        collection.find({"title":{$regex:keyword,$options:"$gi"}}, {
+          skip: (page - 1) * 5,
+          limit: 5
+        }).sort({
+          time: -1
+        }).toArray(function (err, docs){
+          if(err){
+            callback(err);
+          }
+          console.log(docs);
+          docs.forEach(function (doc){
+            doc.post = markdown.toHTML(doc.post);
+          });
+          displayArticles = docs;
+          collection.find({},{
+            "name": 1,
+            "title": 1,
+            "time": 1
+          }).sort({
+            time: -1
+          }).toArray(function (err, docs){
+            if(err){
+              callback(err);
+            }
+            archiveArticles = docs;
+            
+            collection.distinct("tags", function (err, docs){
+              mongodb.close();
+              if(err){
+                return callback(err);
+              }
+              tagArticles = docs;
               callback(null, displayArticles, archiveArticles, tagArticles, total);
             });
           });

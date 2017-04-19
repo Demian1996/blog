@@ -27,8 +27,12 @@
           <a href="/login"><i class="ion-log-in"></i>&nbsp;&nbsp;登录</a>
         </li>
         <% } %>
-        <!--<input class="input" type="text" />-->
+        <form action="/search" method="get">
+          <input id="search" name="keyword" type="search" placeholder="Search..."/>
+          <button id="searchbtn" type="submit" class="btn ion-ios-search"></button>
+        </form>
       </ul>
+      
     </nav>
     <!--<div class="spinner">
       <div class="spinner-container container1">

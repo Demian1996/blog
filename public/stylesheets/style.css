@@ -1,4 +1,4 @@
-html, body, dl, ul, li, dd, h1, h2, h3, h4, h5, h6, p, form {
+html, body, dl, ul, li, dd, h1, h2, h3, h4, h5, h6, p, form, button {
   margin: 0;
   padding: 0;
 }
@@ -16,7 +16,6 @@ body {
 /*header*/
 #navigation ul {
   padding-left: 20%;
-  border-bottom: 1px solid #e3e8ee;
   background-color: #fff;
   position: relative;
 }
@@ -33,7 +32,6 @@ body {
   line-height: 5em;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  position: relative;
 }
 #navigation a:hover {
   color: #5cadff;
@@ -42,6 +40,38 @@ body {
 #navigation .primary {
   color: #3399ff;
   border-bottom: 2px solid #3399ff;
+}
+#navigation form {
+  position: absolute;
+  top: 1.5em;
+  right: 15%;
+}
+#navigation #search {
+  width: 13em;
+  height: 2.5em;
+  line-height: 2em;
+  padding: 4px 7px;
+  border: 1px solid #d7dde4;
+  border-radius: 3px;
+  color: #657180;
+  background-color: #fff;
+}
+#navigation #searchbtn {
+  margin-top: -1px;
+  padding: 0px 6px;
+  font-size: 1.7em;
+}
+::-webkit-input-placeholder {/*webkit内核*/
+  color: #D7DDE4;
+}
+:-moz-placsholder {/*firefox 18-*/
+  color: #D7DDE4;
+}
+::-moz-placsholder {/*firefox 19+*/
+  color: #D7DDE4;
+}
+:-ms-input-placeholder {
+  color: #D7DDE4;
 }
 /*index、user*/
 #content {
@@ -54,12 +84,14 @@ body {
   border-radius: 3px;
   margin-top: 30px;
   margin-left: 10%;
+  padding: 20px;
 /*  box-shadow: 0 0 10px #9ea7b4;*/
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 .article .article-title a{
-  margin: 20px 20px 20px;
+  margin-bottom: 10px;
   font-size: 1.2em;
   color: #464C5B;
 }
@@ -73,16 +105,20 @@ body {
   right: 10px;
 }
 .article span.tag {
+  display: inline-block;
+  transform: skewX(-15deg);
   height: 1em;
   line-height: 1em;
   padding: 5px 8px;
-  margin: 3px;
   background-color: #9ea7b4;
-  border-radius: 5px;
   color: #fff;
 }
+.article span.tag span {
+  display: inline-block;
+  transform: skewX(15deg);
+}
 .article .article-content {
-  margin: 0 20px 20px 20px;
+  margin-top: 20px;
 }
 /*archive*/
 #archive {
@@ -197,6 +233,22 @@ body {
 #login form{
   width: 20em;
   margin: 0 auto;
+}
+/*404*/
+#404 #search {
+  width: 13em;
+  height: 2.5em;
+  line-height: 2em;
+  padding: 4px 7px;
+  border: 1px solid #d7dde4;
+  border-radius: 3px;
+  color: #657180;
+  background-color: #fff;
+}
+#404 #searchbtn {
+  margin-top: -1px;
+  padding: 0px 6px;
+  font-size: 1.7em;
 }
 /*article-page*/ 
 #article-page {

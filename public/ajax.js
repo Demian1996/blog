@@ -37,7 +37,8 @@ function handle(url){
 //此处申明全局变量
 let aList = document.querySelector('#navigation').querySelectorAll('a'),
     content = document.querySelector('#content'),
-    spinner = document.querySelector('.spinner');
+    spinner = document.querySelector('.spinner'),
+    bg = document.querySelector('#bg');
     
 //导航栏ajax
 for(let i = 0, len = aList.length; i < len; i++){
@@ -62,6 +63,7 @@ for(let i = 0, len = aList.length; i < len; i++){
     }, false);
   }
 }
+
 
 //主页下的事件委托ajax
 content.addEventListener('click', function (e){
@@ -91,6 +93,8 @@ window.addEventListener('popstate', function (e){
     }
   }
   let url = location.href;
+  //修改search
+  
   handle(url);
 }, false);
 

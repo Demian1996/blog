@@ -305,6 +305,31 @@ module.exports = function (app){
       user: req.session.user
     });
   });
+  app.get('/search', function (req, res){
+    var page = req.query.p ? parseInt(req.query.p) : 1,
+        keyword = req.query.keyword;
+//  console.log(keyword);
+    Post.search(keyword, page, function (err, posts, allposts, tagposts, total){
+      if(err){
+        posts = [];
+      }
+      res.render('index', {
+        posts: posts,
+        allposts: allposts,
+        tagposts: tagposts,
+        page: page,
+        totalpage: parseInt((total - 1) / 5) + 1,
+        isFirstPage: (page - 1) == 0,
+        isLastPage: ((page - 1) * 5 + posts.length) == total,
+        user: req.session.user
+      });
+    });
+  });
+  app.use(function (req, res) {
+    if (!res.headersSent) {
+      res.status(404).render('404');
+    }
+  });
 };
   
 
