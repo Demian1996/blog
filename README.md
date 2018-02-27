@@ -9,10 +9,11 @@ nodejs（最好是新版本）、mongodb
 clone 后模块安装，blog文件夹下命令行输入
 > npm install
 
-浏览器访问3000端口
-
 模块安装完成后启动程序
 > npm start
+
+浏览器访问3000端口
+
 ### 功能
 - 路由
  - [x] ajax局部刷新
